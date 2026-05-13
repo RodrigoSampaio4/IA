@@ -144,7 +144,7 @@ O notebook também roda sem a chave, mas nesse caso a explicação final será g
 Inserir aqui o link público do vídeo no YouTube ou Google Drive:
 
 ```text
-LINK_DO_VIDEO: [https://youtu.be/8vgx0_7GNys]
+LINK_DO_VIDEO: (https://youtu.be/8vgx0_7GNys)
 ```
 
 Sugestão: grave um vídeo de 2 a 3 minutos mostrando:
