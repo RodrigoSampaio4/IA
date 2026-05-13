@@ -1,0 +1,18 @@
+[
+  {
+    "talhao": "T-01",
+    "analise_gemini_exemplo": "O talhão T-01 apresenta risco crítico de praga por detecção de lagarta com alta confiança e dano foliar severo. O sistema recomenda intervenção localizada e cautela operacional antes de ampliar a irrigação."
+  },
+  {
+    "talhao": "T-02",
+    "analise_gemini_exemplo": "O talhão T-02 apresenta risco alto de praga e condições hídricas aceitáveis. A recomendação é inspeção prioritária e manejo localizado."
+  },
+  {
+    "talhao": "T-03",
+    "analise_gemini_exemplo": "O talhão T-03 não apresenta praga relevante e possui chuva prevista suficiente, portanto a irrigação pode ser suspensa temporariamente."
+  },
+  {
+    "talhao": "T-04",
+    "analise_gemini_exemplo": "O talhão T-04 apresenta indício médio de praga e risco hídrico crítico por solo seco e reservatório baixo. A prioridade é preservar água e coletar novos dados."
+  }
+]
