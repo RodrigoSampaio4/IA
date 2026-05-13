@@ -85,7 +85,6 @@ O código contém validações para evitar falhas abruptas:
 - indisponibilidade temporária da API;
 - execução em modo contingência quando `GEMINI_API_KEY` não está configurada.
 
-Quando a API do Gemini não responde, o pipeline continua funcionando e gera uma explicação local de contingência.
 
 ## 7. Estrutura do repositório
 
@@ -145,7 +144,7 @@ O notebook também roda sem a chave, mas nesse caso a explicação final será g
 Inserir aqui o link público do vídeo no YouTube ou Google Drive:
 
 ```text
-LINK_DO_VIDEO: inserir_link_aqui
+LINK_DO_VIDEO: [https://youtu.be/8vgx0_7GNys]
 ```
 
 Sugestão: grave um vídeo de 2 a 3 minutos mostrando:
