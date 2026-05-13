@@ -1,8 +1,9 @@
 {
-  "mae_rna": 1.8307385779238396,
-  "rmse_rna": 2.371520759954924,
-  "r2_rna": 0.9520884401794278,
+  "mae_rna": 1.831,
+  "rmse_rna": 2.372,
+  "r2_rna": 0.952,
   "mae_baseline_sem_aprendizado": 4.501,
-  "rmse_baseline_sem_aprendizado": 6.228088970320046,
-  "epocas_treinadas": 453
+  "rmse_baseline_sem_aprendizado": 6.228,
+  "epocas_treinadas": 453,
+  "ganho_percentual_mae": 59.33
 }

@@ -1,4 +1,12 @@
 {
+  "status_pipeline": "executado_com_sucesso",
+  "etapas_executadas": [
+    "leitura_sensores",
+    "previsao_rna",
+    "sistema_especialista",
+    "analise_gemini_ou_fallback",
+    "acionamento_atuadores"
+  ],
   "leitura_sensores": {
     "temperatura_c": 21.91,
     "umidade_ar_pct": 74.07,
@@ -15,6 +23,12 @@
     "decisao_irrigacao": "não irrigar",
     "vazao_bomba_pct": 0,
     "manejo_praga": "manter monitoramento padrão",
+    "regras_acionadas": [
+      "Risco de praga classificado como normal.",
+      "SE umidade prevista >= 42% ENTÃO não irrigar.",
+      "SE risco normal/baixo ENTÃO manter monitoramento padrão."
+    ],
+    "justificativa_tecnica": "A umidade prevista foi 61.52%. Chuva detectada: não. Vento alto: não. Risco de praga: normal.",
     "atuadores": {
       "bomba_irrigacao": "desligada",
       "vazao_bomba_pct": 0,
@@ -24,7 +38,7 @@
   },
   "analise_interpretativa": {
     "modo": "fallback_local",
-    "erro": "GEMINI_API_KEY não configurada.",
-    "texto": "MODO CONTINGÊNCIA: API do Gemini indisponível ou chave não configurada. A RNA previu umidade futura de 61.52%. O Sistema Especialista decidiu não irrigar e classificou risco de praga como normal."
+    "erro": "GEMINI_API_KEY não configurada no ambiente de execução.",
+    "texto": "MODO CONTINGÊNCIA: a API do Gemini não foi acionada, mas o pipeline permaneceu operacional. A RNA previu umidade futura de 61.52%. O Sistema Especialista decidiu 'não irrigar', com bomba em 0%, risco de praga 'normal' e manejo: manter monitoramento padrão."
   }
 }

@@ -1,6 +1,8 @@
-agtech_etapa4_validacao_final/
+AgTech_Automacao_Precisao_Etapa4_Final/
 ├── README.md
 ├── requirements.txt
+├── CHECKLIST_ETAPA4.md
+├── ESTRUTURA_REPOSITORIO.txt
 ├── notebooks/
 │   └── AgTech_Etapa4_Validacao_Final.ipynb
 ├── data/
@@ -12,10 +14,12 @@ agtech_etapa4_validacao_final/
 │   └── metricas_modelo_final.json
 ├── assets/
 │   └── images/
+│       ├── agtech_visao_geral_projeto.png
 │       ├── arquitetura_pipeline_agtech.png
 │       ├── grafico_loss_rna.png
 │       ├── comparacao_antes_depois.png
 │       ├── previsao_vs_real_rna.png
 │       └── log_execucao_pipeline.png
 └── docs/
+    ├── apendice_uso_ia.md
     └── roteiro_video_pitch.md
