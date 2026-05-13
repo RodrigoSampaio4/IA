@@ -1,0 +1,30 @@
+{
+  "leitura_sensores": {
+    "temperatura_c": 21.91,
+    "umidade_ar_pct": 74.07,
+    "umidade_solo_pct": 57.31,
+    "chuva_mm": 0.0,
+    "vento_kmh": 5.92,
+    "ndvi": 0.779,
+    "confianca_praga_pct": 2.37,
+    "area_foliar_afetada_pct": 0.0
+  },
+  "umidade_prevista_proxima_hora_pct": 61.52,
+  "decisao_especialista": {
+    "risco_praga": "normal",
+    "decisao_irrigacao": "não irrigar",
+    "vazao_bomba_pct": 0,
+    "manejo_praga": "manter monitoramento padrão",
+    "atuadores": {
+      "bomba_irrigacao": "desligada",
+      "vazao_bomba_pct": 0,
+      "pulverizador": "desligado",
+      "drone_inspecao": "stand-by"
+    }
+  },
+  "analise_interpretativa": {
+    "modo": "fallback_local",
+    "erro": "GEMINI_API_KEY não configurada.",
+    "texto": "MODO CONTINGÊNCIA: API do Gemini indisponível ou chave não configurada. A RNA previu umidade futura de 61.52%. O Sistema Especialista decidiu não irrigar e classificou risco de praga como normal."
+  }
+}

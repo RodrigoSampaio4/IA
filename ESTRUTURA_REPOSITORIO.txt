@@ -1,0 +1,21 @@
+agtech_etapa4_validacao_final/
+├── README.md
+├── requirements.txt
+├── notebooks/
+│   └── AgTech_Etapa4_Validacao_Final.ipynb
+├── data/
+│   └── sensores_agtech_simulados.csv
+├── src/
+│   └── pipeline_final_agtech.py
+├── logs/
+│   ├── log_pipeline_final.json
+│   └── metricas_modelo_final.json
+├── assets/
+│   └── images/
+│       ├── arquitetura_pipeline_agtech.png
+│       ├── grafico_loss_rna.png
+│       ├── comparacao_antes_depois.png
+│       ├── previsao_vs_real_rna.png
+│       └── log_execucao_pipeline.png
+└── docs/
+    └── roteiro_video_pitch.md

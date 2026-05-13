@@ -1,6 +1,5 @@
-# Bibliotecas principais para executar o notebook no Google Colab
-scikit-learn
-pandas
 numpy
+pandas
 matplotlib
+scikit-learn
 google-genai

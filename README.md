@@ -1,201 +1,189 @@
-# AgTech: Automação de Precisão — Etapa 3
+# AgTech: Automação de Precisão com RNA, Sistema Especialista e Gemini
 
-## Tema
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Google Colab](https://img.shields.io/badge/Google%20Colab-Compatible-orange)
+![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-RNA-green)
+![Gemini API](https://img.shields.io/badge/Gemini%20API-Análise%20Interpretativa-purple)
+![Status](https://img.shields.io/badge/Etapa%204-Validação%20Final-success)
 
-**AgTech: Automação de Precisão** — sistema para drones ou robôs agrícolas que identificam pragas por visão computacional e gerenciam recursos hídricos no campo.
+## 1. Resumo do projeto
 
-## Continuidade das etapas anteriores
+Este projeto propõe um agente AgTech para **automação de precisão em drones ou robôs agrícolas**. O sistema utiliza sensores de campo, uma **Rede Neural Artificial** para prever a umidade do solo na próxima hora, um **Sistema Especialista** para tomar decisões técnicas e a **API do Gemini** para gerar uma explicação em linguagem natural.
 
-Na Etapa 2, o sistema utilizava um **Sistema Especialista** com regras do tipo SE/ENTÃO para decidir ações de irrigação e manejo de pragas. Nesta Etapa 3, foi adicionada uma camada de **aprendizado preditivo** para que o agente não dependa apenas da leitura atual dos sensores.
+O objetivo é apoiar decisões no campo, como irrigação, inspeção por drone e pulverização localizada, considerando risco de pragas e disponibilidade hídrica.
 
-## Abordagem escolhida
+## 2. Arquitetura final
 
-A abordagem escolhida foi a **Opção A — Redes Neurais Artificiais (RNA)**.
+![Arquitetura do pipeline](assets/images/arquitetura_pipeline_agtech.png)
 
-A RNA foi escolhida porque o problema de irrigação exige antecipação. Em vez de o agente reagir apenas à umidade atual do solo, a rede neural aprende padrões dos sensores e prevê a **umidade do solo na próxima hora**. Esse valor previsto alimenta o Sistema Especialista da Etapa 2, tornando a decisão mais preventiva.
-
-## Arquitetura lógica
-
-```text
-Sensores da Etapa 1
-│
-├── Umidade do solo atual (%)
-├── Temperatura (°C)
-├── Umidade do ar (%)
-├── Velocidade do vento (km/h)
-├── Chuva prevista (mm)
-├── Evapotranspiração estimada (mm/h)
-├── Confiança da visão computacional para praga
-└── Dano foliar estimado (%)
-        │
-        ▼
-Rede Neural Artificial — MLPRegressor
-        │
-        ▼
-Previsão da umidade do solo na próxima hora
-        │
-        ▼
-Sistema Especialista da Etapa 2
-        │
-        ├── Classificação de risco hídrico
-        ├── Classificação de risco de praga
-        └── Definição dos atuadores
-                │
-                ├── Bomba/válvula de irrigação
-                ├── Drone/robô de pulverização localizada
-                └── Alerta ao agrônomo
-                        │
-                        ▼
-Gemini API — Análise Interpretativa
-```
-
-## Função da RNA
-
-A rede neural foi implementada com `MLPRegressor`, da biblioteca Scikit-Learn. Ela recebe os dados dos sensores e retorna a previsão da variável:
+Fluxo implementado:
 
 ```text
-umidade_solo_prox_hora_pct
+Leitura dos Sensores
+        ↓
+RNA prevê umidade futura
+        ↓
+Sistema Especialista aplica regras SE/ENTÃO
+        ↓
+Gemini gera análise interpretativa
+        ↓
+Atuadores: bomba, pulverizador e drone
 ```
 
-Esse valor é usado como entrada no Sistema Especialista. Assim, a lógica de decisão deixa de ser apenas reativa e passa a ser preditiva.
+## 3. Abordagem escolhida na Etapa 3
 
-## Métricas de desempenho
+A abordagem escolhida foi **Opção A — Redes Neurais Artificiais RNA**.
 
-No teste com dados simulados, o modelo obteve:
+A RNA foi escolhida porque o sistema precisava de capacidade preditiva. Em vez de decidir irrigação apenas pela umidade atual, o agente passa a prever a **umidade do solo na próxima hora**, antecipando situações de estresse hídrico.
 
-- **MAE:** 2.114 pontos percentuais de umidade
-- **RMSE:** 2.604 pontos percentuais de umidade
-- **R²:** 0.985
-- **Épocas treinadas:** 155
+### Métricas obtidas
 
-## Gráfico de desempenho
+| Métrica | Valor |
+|---|---:|
+| MAE da RNA | 1.831 |
+| RMSE da RNA | 2.372 |
+| R² da RNA | 0.952 |
+| MAE antes do aprendizado | 4.501 |
+| Épocas treinadas | 453 |
 
-O gráfico abaixo mostra a queda da perda durante o treinamento da RNA:
+## 4. Evidências visuais
 
-![Gráfico de Loss da RNA](imagens/grafico_loss_rna.png)
+### Gráfico de aprendizado da RNA
 
-## Comparação visual antes e depois do aprendizado
+![Gráfico de Loss](assets/images/grafico_loss_rna.png)
 
-Antes do aprendizado, o Sistema Especialista usava a umidade atual do solo. Depois do aprendizado, ele usa a umidade prevista para a próxima hora.
+### Comparação antes e depois do aprendizado
 
-![Comparação antes e depois](imagens/comparacao_antes_depois.png)
+![Comparação antes e depois](assets/images/comparacao_antes_depois.png)
 
-## Resultado da previsão
+### Log final do pipeline integrado
 
-Também foi gerado um gráfico comparando a umidade real com a umidade prevista pela RNA:
+![Log de execução](assets/images/log_execucao_pipeline.png)
 
-![Previsão versus real](imagens/previsao_vs_real_rna.png)
+## 5. Sistema Especialista
 
-## Integração com Gemini API
+O Sistema Especialista recebe a previsão da RNA e os dados de sensores. Em seguida, aplica regras rígidas como:
 
-O Gemini não toma a decisão técnica. A decisão continua sendo feita pelo Sistema Especialista. O Gemini recebe:
+```text
+SE umidade prevista < 22% E não há chuva detectada
+ENTÃO acionar irrigação crítica com bomba em 100%.
 
-- dados dos sensores;
-- previsão da RNA;
-- decisão antes do aprendizado;
-- decisão depois do aprendizado;
-- atuadores acionados;
-- principais sensores que influenciaram o modelo.
+SE confiança de praga >= 70% E área foliar afetada >= 25%
+ENTÃO classificar risco como alto.
 
-A função do Gemini é gerar uma explicação em linguagem natural sobre o que o modelo aprendeu e por que a decisão final foi tomada.
+SE risco de praga alto OU crítico E vento não está alto
+ENTÃO acionar pulverização localizada e nova inspeção por drone.
+```
 
-## Como rodar no Google Colab
+## 6. Tratamento de exceções
 
-1. Abra o notebook `AgTech_Etapa3_RNA_SistemaEspecialista_Gemini.ipynb`.
-2. Execute a célula de instalação das bibliotecas.
-3. Configure sua chave da API Gemini no Colab.
+O código contém validações para evitar falhas abruptas:
 
-Você pode cadastrar no painel de Secrets do Colab uma variável chamada `GEMINI_API_KEY` ou usar variável de ambiente:
+- ausência de colunas obrigatórias dos sensores;
+- valores nulos ou inválidos;
+- falha de autenticação na API do Gemini;
+- indisponibilidade temporária da API;
+- execução em modo contingência quando `GEMINI_API_KEY` não está configurada.
+
+Quando a API do Gemini não responde, o pipeline continua funcionando e gera uma explicação local de contingência.
+
+## 7. Estrutura do repositório
+
+```text
+.
+├── README.md
+├── requirements.txt
+├── notebooks/
+│   └── AgTech_Etapa4_Validacao_Final.ipynb
+├── data/
+│   └── sensores_agtech_simulados.csv
+├── src/
+│   └── pipeline_final_agtech.py
+├── logs/
+│   ├── log_pipeline_final.json
+│   └── metricas_modelo_final.json
+├── assets/
+│   └── images/
+│       ├── arquitetura_pipeline_agtech.png
+│       ├── grafico_loss_rna.png
+│       ├── comparacao_antes_depois.png
+│       ├── previsao_vs_real_rna.png
+│       └── log_execucao_pipeline.png
+└── docs/
+    └── roteiro_video_pitch.md
+```
+
+> Observação: não envie `.zip` ou `.rar` no GitHub. Os arquivos devem ficar expostos nas pastas do repositório.
+
+## 8. Como executar no Google Colab
+
+1. Abra o notebook:
+
+```text
+notebooks/AgTech_Etapa4_Validacao_Final.ipynb
+```
+
+2. Execute a célula de instalação:
 
 ```python
-import os
-os.environ["GEMINI_API_KEY"] = "SUA_CHAVE_AQUI"
+%pip install -q -U numpy pandas matplotlib scikit-learn google-genai
 ```
 
-4. Execute todas as células do notebook.
-5. Ao final, o notebook irá gerar:
-
-- gráfico de loss;
-- comparação antes/depois;
-- logs da decisão;
-- análise interpretativa do Gemini.
-
-## Arquivos principais
+3. Configure a chave do Gemini no Colab:
 
 ```text
-AgTech_Etapa3_RNA_SistemaEspecialista_Gemini.ipynb
-README.md
-requirements.txt
-dados_sensores_simulados.csv
-imagens/grafico_loss_rna.png
-imagens/comparacao_antes_depois.png
-imagens/previsao_vs_real_rna.png
-logs/log_integracao_etapa3.json
-logs/importancia_sensores_rna.csv
+Nome do segredo: GEMINI_API_KEY
+Valor: sua chave da API
 ```
 
-## Exemplo de log de saída
+4. Execute todas as células em sequência.
+
+O notebook também roda sem a chave, mas nesse caso a explicação final será gerada em modo de contingência local.
+
+## 9. Link do vídeo de demonstração
+
+Inserir aqui o link público do vídeo no YouTube ou Google Drive:
+
+```text
+LINK_DO_VIDEO: inserir_link_aqui
+```
+
+Sugestão: grave um vídeo de 2 a 3 minutos mostrando:
+
+1. estrutura do repositório;
+2. execução do notebook;
+3. gráfico de Loss;
+4. comparação antes/depois;
+5. log final com decisão dos atuadores;
+6. resposta do Gemini ou fallback local.
+
+## 10. Resultado final esperado
+
+Ao final da execução, o sistema deve mostrar um log parecido com:
 
 ```json
 {
-  "abordagem_etapa3": "Redes Neurais Artificiais - MLPRegressor/Scikit-Learn",
-  "objetivo_modelo": "Prever a umidade do solo da próxima hora para antecipar a decisão de irrigação do Sistema Especialista da Etapa 2.",
-  "metricas": {
-    "MAE_pct_umidade": 2.114,
-    "RMSE_pct_umidade": 2.604,
-    "R2": 0.985,
-    "epocas_treinadas": 155
-  },
-  "cenario_teste": {
-    "umidade_solo_atual_pct": 38.0,
-    "temperatura_c": 34.5,
-    "umidade_ar_pct": 43.0,
-    "vento_kmh": 14.5,
-    "chuva_prevista_mm": 0.5,
-    "evapotranspiracao_mm_h": 3.9,
-    "confianca_praga_visao": 0.82,
-    "dano_foliar_pct": 28.0
-  },
-  "decisao_antes_aprendizado": {
-    "risco_praga": "ALTO",
-    "risco_hidrico": "ADEQUADO",
-    "acao_irrigacao": "MANTER irrigação desligada; solo em faixa adequada",
-    "vazao_irrigacao_pct": 0,
-    "acao_manejo_praga": "Realizar inspeção direcionada e controle localizado preventivo"
-  },
-  "umidade_prevista_rna_pct": 28.4,
-  "decisao_depois_aprendizado": {
-    "risco_praga": "ALTO",
-    "risco_hidrico": "DÉFICIT",
-    "acao_irrigacao": "ACIONAR irrigação em nível MÉDIO e reavaliar em 1 hora",
-    "vazao_irrigacao_pct": 60,
-    "acao_manejo_praga": "Realizar inspeção direcionada e controle localizado preventivo"
-  },
-  "top_sensores_aprendidos": [
-    {
-      "sensor": "umidade_solo_atual_pct",
-      "importancia_media": 21.867338003456588
-    },
-    {
-      "sensor": "chuva_prevista_mm",
-      "importancia_media": 2.8612422321013526
-    },
-    {
-      "sensor": "evapotranspiracao_mm_h",
-      "importancia_media": 1.079331562839115
-    },
-    {
-      "sensor": "confianca_praga_visao",
-      "importancia_media": 0.07276992279090116
-    },
-    {
-      "sensor": "temperatura_c",
-      "importancia_media": 0.04422837902677157
+  "umidade_prevista_proxima_hora_pct": 61.52,
+  "decisao_especialista": {
+    "risco_praga": "baixo",
+    "decisao_irrigacao": "irrigação moderada",
+    "vazao_bomba_pct": 65,
+    "atuadores": {
+      "bomba_irrigacao": "ligada",
+      "pulverizador": "desligado",
+      "drone_inspecao": "stand-by"
     }
-  ]
+  }
 }
 ```
 
-## Conclusão
+## 11. Tecnologias utilizadas
 
-A Etapa 3 adicionou capacidade de previsão ao agente AgTech. Com a RNA, o sistema passa a antecipar a queda de umidade do solo e alimenta o Sistema Especialista com uma informação mais inteligente. Dessa forma, o agente pode acionar irrigação de maneira preventiva, priorizar áreas com risco de praga e gerar explicações estratégicas com apoio da API do Gemini.
+- Python
+- Google Colab
+- Pandas
+- NumPy
+- Matplotlib
+- Scikit-Learn
+- Google Gemini API
+- Sistema Especialista baseado em regras
